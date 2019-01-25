@@ -10,7 +10,7 @@ extends them to a rich set of commands, plus visual display of your
 execution of the debuggee.  Those who have used the built-in R tools
 **debug()** and **browser()** will find many similarities, but no such 
 background is assumed.  (Note:  RStudio,
-ESS and statet all have nice debugging tools.)
+ESS and StatET all have nice debugging tools.)
 
 Note that **an additional of goal of this package is to teach good
 debugging habits.**  This feature will be developed over time.
@@ -26,7 +26,7 @@ Python is also required.
 <li> After installing and loading **dbgR** type
 
 ``` R
-debugR(system.file('examples/test.R',package='dbgR'))
+dbgR(system.file('examples/test.R',package='dbgR'))
 ```
 
 in your R console.  The example file has contents
@@ -48,10 +48,14 @@ f <- function() {
 
 This will create a new window, with a new instance of R running in it.
 Let's call this new one Window 1, and refer to the original one (from
-which you called **debugR**) as Window 0.  During the debugging process,
-you will primarily be working with Window 0.  (If you happen to look at
-Window 1, you'll see that **debugR** is sending commands to the R
-session in Window 1, but you should focus on Window 0.) 
+which you called **dbgR**) as Window 0.  During the debugging process,
+you will primarily be working with Window 0, but will use Window 1 for
+viewing program output.  
+
+(If you happen to look at Window 1, you'll see that **dbgR** is sending
+commands to the R session in Window 1, but you should focus on Window
+0.) 
+
 </li> </p> 
 
 <li> In the command area (space at the bottom of Window 0 type)
@@ -70,8 +74,10 @@ rn f()
 ```
 
 which instructs the tool to run ("rn") the expression **f()**.
-(No arguments in this particular call, but of course you could have 
-some for other functions.  Any R command can be run here.)  
+No arguments in this particular call, but of course you could have 
+some for other functions.  
+
+Any R command can be run here, not just a function call.
 </li> </p> 
 
 <li> You can then type **n** for next line, **c** for continue, 
@@ -115,11 +121,16 @@ down: scroll down in debugger window
 <br>up: scroll up in debugger window
   
 Q:  quit R's debugger
-<br>es:  exit debugR program
+<br>es:  exit dbgR program
   
 ls srcfile:  (re)load source file; if no file given, use the previous one
 
 ## Deleting Old 'screen' Sessions
+
+This package uses the Unix-family **screen** facility.  If **dbgR** ends
+prematurely, some **screen** sessions may be left over, and will needed
+to be deleted before further use of **dbgR**, which can be done via a
+**killscreen()** call
 
 ## Known Issues
 
