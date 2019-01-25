@@ -1,5 +1,5 @@
 
-# debugR.R, a debugging tool for the R programming language    
+# dbgR.R, a debugging tool for the R programming language    
 
 # see Known Issues at end of this file
 
@@ -8,7 +8,7 @@
 # submits comments, e.g. n for next statement, from within this window,
 # rarely if ever needing to shift focus to the R window
 
-# usage: (in R terminal) debugR("primary_source_file.R")
+# usage: (in R terminal) dbgR("primary_source_file.R")
 
 # basic idea:  this program starts up the Unix/Linux "screen" utility
 # (to be replaced with a pipe version in the near future), then starts
@@ -703,15 +703,15 @@ dohelp <- function() {
         # on it.
         hf = system.file('help.txt',package='dbgR') 
         hflines = readLines(hf)
-        ## hf = file("R/debugR.R", "r")  # hardcode file name, for now
+        ## hf = file("R/dbgR.R", "r")  # hardcode file name, for now
         hf = system.file("help.txt",package='dbgR')
         hflines = readLines(hf)
-        hfout = file("/tmp/debugRhelp","w")
+        hfout = file("/tmp/dbgRhelp","w")
         cat(hflines,sep="\n",file=hfout)
         close(hfout)
         debugr$helpfile <- TRUE
     }
-    tosend = "edit(file=\'/tmp/debugRhelp\')"
+    tosend = "edit(file=\'/tmp/dbgRhelp\')"
     sendtoscreen(tosend)
 }
 
@@ -833,7 +833,7 @@ killScreen <- function() {
     system('killall screen')
 }
 
-debugR <- function(filename) {
+dbgR <- function(filename) {
     # check for existing 'screen' sessions with name 'rdebug'
     tmp <- system('screen -ls | grep rdebug')
     if (tmp == 0) {
@@ -1047,7 +1047,7 @@ debugR <- function(filename) {
 # up: scroll down
 #   
 # Q:  quit R's debugger
-# es:  exit debugR program
+# es:  exit dbgR program
 #   
 # ls srcfile:  (re)load source file; if no file given, use the previous one
 #   
@@ -1085,17 +1085,17 @@ debugR <- function(filename) {
 #   
 # At the shell command line, type
 #   
-#    python debugR.py test.R
+#    python dbgR.py test.R
 #   
-# Then debugR will appear in your shell window, and it will invoke
-# an R session in a new window.  In the debugR window, type
+# Then dbgR will appear in your shell window, and it will invoke
+# an R session in a new window.  In the dbgR window, type
 #   
 #    df f
 #    rn f()
 #   
 # That says to set the function f() to R debug state, and run f().  Then hit
 # n to go from line to line, hitting c to continue, Q to exit the R
-# debugger (but not debugR).  Hit es to end this debugR session.
+# debugger (but not dbgR).  Hit es to end this dbgR session.
 #  
 # See the Command List section above for a full list of commands.  Be
 # sure to read the Tips section too.

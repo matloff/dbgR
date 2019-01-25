@@ -3,6 +3,6 @@ import(stats,utils,rcurses,stringr)
 
 importFrom("methods", "new")
 
-export(debugR)
+export(dbgR)
 export(assert)
 export(killScreen)
