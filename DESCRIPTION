@@ -1,0 +1,19 @@
+Package: dbgR
+Version: 0.1
+Title: R Debugging -- a Tool and a Tutorial
+Authors@R: c(person("Norm", "Matloff", email = "normmatloff@gmail.com",
+                    role = c("aut", "cre")),
+             person("Matthew", "Kotila", email = "mrkotila@ucdavis.edu",
+                    role = c("aut")),
+             person("Aaron", "Kaloti", email = "apksingh@ucdavis.edu",
+                    role = c("aut")))
+Maintainer: Norm Matloff <normmatloff@gmail.com>
+Description: Sophisticated debugging tool for R code, with advanced and
+             novel features. General tutorial on techniques for debugging.
+Imports: rcurses, stringr
+Depends: stats,utils
+ByteCompile: yes
+NeedsCompilation: no
+License: GPL (>= 2)
+URL: https://github.com/matloff/debugR
+BugReports: https://github.com/matloff/debugR/issues
