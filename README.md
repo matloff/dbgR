@@ -15,21 +15,24 @@ ESS and StatET all have nice debugging tools.)
 Note that **an additional of goal of this package is to teach good
 debugging habits.**  This feature will be developed over time.
 
-The tool currently needs a Linux or other Unix-family environment, e.g. Macs. 
-It should work on Cygwin.  (We may have a Windows version in the future.)
-Python is also required.
+## What You Need
+
+* **screen** utility (Mac, Linux)
+
+* **xterm** or **gnome-term** (the former is installable on Mac, Linux;
+  the latter is included in Ubuntu Linux)
 
 ## Quick Start
 
-<UL>
-
-<li> After installing and loading **dbgR** type
+* After installing and loading **dbgR** type
 
 ``` R
-dbgR(system.file('examples/test.R',package='dbgR'))
+dbgR(system.file('examples/test.R',package='dbgR'),'xterm')
 ```
 
-in your R console.  The example file has contents
+in your R console.  (Currently the only two terminal types allowed are
+xterm and gnome-terminal.  The former can be installed in Macs.)
+The example file has contents
 
 ```R
 f <- function() {
@@ -42,9 +45,6 @@ f <- function() {
    c(sum,sum2)
 }
 ```
-</li> </p> 
-
-<li> 
 
 This will create a new window, with a new instance of R running in it.
 Let's call this new one Window 1, and refer to the original one (from
@@ -56,18 +56,15 @@ viewing program output.
 commands to the R session in Window 1, but you should focus on Window
 0.) 
 
-</li> </p> 
-
-<li> In the command area (space at the bottom of Window 0 type)
+* In the command area (space at the bottom of Window 0 type)
 
 ```
 df f
 ```
 
 to set the function <strong>f()</strong> to debug status.  
-</li> </p> 
 
-<li> Then in the command area, type
+* Then in the command area, type
 
 ```
 rn f()
@@ -78,9 +75,8 @@ No arguments in this particular call, but of course you could have
 some for other functions.  
 
 Any R command can be run here, not just a function call.
-</li> </p> 
 
-<li> You can then type **n** for next line, **c** for continue, 
+* You can then type **n** for next line, **c** for continue, 
 **p** to print the value of a variable etc. 
 Type **Q** to quit the browser in the R window, and **es** to 
 leave the debugging tool.
