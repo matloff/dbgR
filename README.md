@@ -3,14 +3,13 @@
    
 <img src = http://heather.cs.ucdavis.edu/debugRcartoon.png>
 
-This tool, **dbgR**, 
-greatly enhances the R debugging process.  R's own
-built-in debugging tools are very limited, but **dbgR**
-extends them to a rich set of commands, plus visual display of your
-execution of the debuggee.  Those who have used the built-in R tools
-**debug()** and **browser()** will find many similarities, but no such 
-background is assumed.  (Note:  RStudio,
-ESS and StatET all have nice debugging tools.)
+This tool, **dbgR**, greatly enhances the R debugging process.  R's own
+built-in debugging tools are very limited, but **dbgR** extends them to
+a rich set of commands, plus visual display of your execution of the
+debuggee.  Those who have used the built-in R tools **debug()** and
+**browser()** will find many similarities, but no such background is
+assumed.  (Note:  RStudio, ESS and StatET all have nice debugging
+tools.)
 
 Note that **an additional of goal of this package is to teach good
 debugging habits.**  This feature will be developed over time.
@@ -19,20 +18,28 @@ debugging habits.**  This feature will be developed over time.
 
 * **screen** utility (Mac, Linux)
 
-* **xterm** or **gnome-term** (the former is installable on Mac, Linux;
+## Nice to Have
+
+* **xterm** or **gnome-terminal** (the former is installable on Mac, Linux;
   the latter is included in Ubuntu Linux)
+
+* a bit of prior experience with R's **debug()** function
 
 ## Quick Start
 
 * After installing and loading **dbgR** type
 
 ``` R
-dbgR(system.file('examples/test.R',package='dbgR'),'xterm')
+dbgR(system.file('examples/test.R',package='dbgR'),NULL)
 ```
 
-in your R console.  (Currently the only two terminal types allowed are
-xterm and gnome-terminal.  The former can be installed in Macs.)
-The example file has contents
+in your R console.  Substitute 'xterm' or 'gnome-term' for NULL if you have it.
+
+That call to **system.file** is just a means of getting the test file
+from the **dbgR** packages **examples** directory.  Normally you would
+type in your own file to be debugged.
+
+The test file has contents
 
 ```R
 f <- function() {
@@ -46,15 +53,18 @@ f <- function() {
 }
 ```
 
-This will create a new window, with a new instance of R running in it.
-Let's call this new one Window 1, and refer to the original one (from
-which you called **dbgR**) as Window 0.  During the debugging process,
-you will primarily be working with Window 0, but will use Window 1 for
-viewing program output.  
+If you specified a terminal type, the call to **dbgR()** will cause a
+new window to be launched, with R running in it.  If you left the
+terminal type as NULL, you will be asked to launch a terminal window
+yourself by hand; just heed the instructions.  
+
+Either way, let's call this Window 1, and refer to the original one
+(from which you called **dbgR**) as Window 0.  During the debugging
+process, you will primarily be typing in Window 0, but will use
+Window 1 for viewing output of some commands. 
 
 (If you happen to look at Window 1, you'll see that **dbgR** is sending
-commands to the R session in Window 1, but you should focus on Window
-0.) 
+commands to the R session in Window 1.) 
 
 * In the command area (space at the bottom of Window 0 type)
 
@@ -62,7 +72,8 @@ commands to the R session in Window 1, but you should focus on Window
 df f
 ```
 
-to set the function <strong>f()</strong> to debug status.  
+to set the function <strong>f()</strong> to debug status.  (Indeed,
+you'll see that **debug(f)** was run in Window 1.)
 
 * Then in the command area, type
 
@@ -70,28 +81,31 @@ to set the function <strong>f()</strong> to debug status.
 rn f()
 ```
 
-which instructs the tool to run ("rn") the expression **f()**.
-No arguments in this particular call, but of course you could have 
-some for other functions.  
+which instructs the tool to run ("rn") the expression **f()**.  No
+arguments in this particular call, but of course you could have some for
+other functions.  Any R command can be run here, not just a function
+call.
 
-Any R command can be run here, not just a function call.
-
-* You can then type **n** for next line, **c** for continue, 
-**p** to print the value of a variable etc. 
-Type **Q** to quit the browser in the R window, and **es** to 
-leave the debugging tool.
-</li> </p> 
+* You can then type 'n' for next line, 'c' for continue, 
+'p' to print the value of a variable etc. 
+Type 'Q' to quit the browser in Window 1, or 'es' to 
+leave the debugging tool.  (Window 1 will go away, and in Window 0, your
+original R console will reappear.)
 
 There are many other commands, e.g. conditional breakpoints, automatic
-printing of variables/expressions at each pause, etc.  Type **h** to see
-a list of all commands, which are displayed in Window 1, in whatever
-text editor your R configuration uses.
+printing of variables/expressions at each pause, etc.  
+
+Type 'h' to see a list of all commands, which will then be displayed in
+Window 1, in whatever text editor your R configuration uses.  You can
+scroll up and down there, then exit the editor when you're done.
 
 ## Command List
 
-Enter key:  repeat last command (should use this a lot, e.g. for n)
+Enter key:  repeat last command (should use this a lot, e.g. for
+repeating 'n' command)
   
-rn expr:  Run the given R expression; if no expression, use the previous Run
+rn expr:  Run the given R expression; if no expression given, then
+use the previous Run
   
 n,s,c:  go to Next line/Step into function/Continue until next pause
   
