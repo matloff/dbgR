@@ -697,19 +697,21 @@ doquitbrowser <- function() {
 }
 
 dohelp <- function() {
-    if (!debugr$helpfile) {
-        # open this R source file, find the help section, make a tmp
-        # file from it, and have R invoke the user's favorite text editor
-        # on it
-        hf = system.file("help.txt",package='dbgR')
-        hflines = readLines(hf)
-        hfout = file("/tmp/dbgRhelp","w")
-        cat(hflines,sep="\n",file=hfout)
-        close(hfout)
-        debugr$helpfile <- TRUE
-    }
-    tosend = "edit(file=\'/tmp/dbgRhelp\')"
-    sendtoscreen(tosend)
+###     if (!debugr$helpfile) {
+###         # open this R source file, find the help section, make a tmp
+###         # file from it, and have R invoke the user's favorite text editor
+###         # on it
+###         hf = system.file("help.txt",package='dbgR')
+###         hflines = readLines(hf)
+###         hfout = file("/tmp/dbgRhelp","w")
+###         cat(hflines,sep="\n",file=hfout)
+###         close(hfout)
+###         debugr$helpfile <- TRUE
+###     }
+###     tosend = "edit(file=\'/tmp/dbgRhelp\')"
+###     sendtoscreen(tosend)
+   tosend <- "print(base:::readlines('help.txt'))"
+   sendtoscreen(tosend)
 }
 
 # initialize rcurses environment
