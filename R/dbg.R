@@ -710,7 +710,7 @@ dohelp <- function() {
 ###     }
 ###     tosend = "edit(file=\'/tmp/dbgRhelp\')"
 ###     sendtoscreen(tosend)
-   tosend <- "print(base:::readlines('help.txt'))"
+   tosend <- "print(base:::readLines('help.txt'))"
    sendtoscreen(tosend)
 }
 
@@ -783,10 +783,10 @@ getusercmd <- function() {
 
 setupscreen <- function(term) {
     # start "screen, with name 'rdebug' for now
-    cmd <- paste0(term,' -e "screen -S \'rdebug\'" &')
+    cmd <- paste0(term,' -- screen -S "rdebug" &')
     scmd <- makeSysCmd(cmd)
     scmd()
-    # system('xterm -e "screen -S \'rdebug\'" &')
+    # system('xterm -e screen -S 'rdebug" &')
     # start R within screen
     Sys.sleep(1)
     sendtoscreen('R --no-save -q')
@@ -835,7 +835,8 @@ killScreen <- function() {
     system('killall screen')
 }
 
-dbgR <- function(filename,term='xterm') {
+dbgR <- function(filename,term='gnome-terminal') {
+if (term !- 'gnome-terminal') stop('currently only for gnome-terminal')
     # check for existing 'screen' sessions with name 'rdebug'
     tmp <- system('screen -ls | grep rdebug')
     if (tmp == 0) {
