@@ -30,7 +30,7 @@ debugging habits.**  This feature will be developed over time.
 * After installing and loading **dbgR** type
 
 ``` R
-dbgR(system.file('examples/test.R',package='dbgR'),NULL)
+dbgR(system.file('examples/test.R',package='dbgR'))
 ```
 
 in your R console.  Substitute 'xterm' or 'gnome-term' for NULL if you have it.
