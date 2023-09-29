@@ -24,6 +24,8 @@
 
 # Author:  Norm Matloff
 
+print('under construction!')
+
 suppressMessages(library(rcurses))
 library(stringr)
 
@@ -836,7 +838,7 @@ killScreen <- function() {
 }
 
 dbgR <- function(filename,term='gnome-terminal') {
-if (term !- 'gnome-terminal') stop('currently only for gnome-terminal')
+if (term != 'gnome-terminal') stop('currently only for gnome-terminal')
     # check for existing 'screen' sessions with name 'rdebug'
     tmp <- system('screen -ls | grep rdebug')
     if (tmp == 0) {
