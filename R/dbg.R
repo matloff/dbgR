@@ -712,7 +712,8 @@ dohelp <- function() {
 ###     }
 ###     tosend = "edit(file=\'/tmp/dbgRhelp\')"
 ###     sendtoscreen(tosend)
-   tosend <- "print(base:::readLines(system.file('help.txt',package='dbgR')))" 
+   tosend <- "print(scan(file=system.file('help.txt',package='dbgR'),what='',sep='\\n'))" 
+   ### tosend <- "print(readLines(system.file('help.txt',package='dbgR')))" 
    ### tosend <- "print(base:::readLines('help.txt'))"
    sendtoscreen(tosend)
 }
