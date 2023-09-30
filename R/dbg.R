@@ -712,7 +712,8 @@ dohelp <- function() {
 ###     }
 ###     tosend = "edit(file=\'/tmp/dbgRhelp\')"
 ###     sendtoscreen(tosend)
-   tosend <- "print(scan(file=system.file('help.txt',package='dbgR'),what='',sep='\\n'))" 
+   sendtoscreen('gethelp()')
+   ### tosend <- "print(scan(file=system.file('help.txt',package='dbgR'),what='',sep='\\n'))" 
    ### tosend <- "print(readLines(system.file('help.txt',package='dbgR')))" 
    ### tosend <- "print(base:::readLines('help.txt'))"
    sendtoscreen(tosend)
@@ -839,8 +840,15 @@ killScreen <- function() {
     system('killall screen')
 }
 
-dbgR <- function(filename,term='gnome-terminal') {
-if (term != 'gnome-terminal') stop('currently only for gnome-terminal')
+dbgR <- function(filename,term=NULL) {
+
+    if (is.null(term)) {
+       print('currently only for gnome-terminal')
+       print('set up manually by running this in a separate terminal window:')
+       print('screen -S "rdebug"')
+       readline('hit any key when ready')
+    }
+
     # check for existing 'screen' sessions with name 'rdebug'
     tmp <- system('screen -ls | grep rdebug')
     if (tmp == 0) {
@@ -850,6 +858,12 @@ if (term != 'gnome-terminal') stop('currently only for gnome-terminal')
 
     setupscreen(term)
     initcursesthings()
+
+# set up help file
+sendtoscreen("helpfile <- system.file('help.txt',package='dbgR')")
+sendtoscreen("systcmd <- paste('more',helpfile)")
+tosend <- "gethelp <- function() system(systcmd)"
+sendtoscreen(tosend)
 
     # save the file name in a global variable
     debugr$currsrcfilename <- filename
