@@ -855,7 +855,7 @@ print('UNDER CONSTRUCTION!')
     if (is.null(term)) {
        print('currently only for gnome-terminal')
        print('set up manually by running this in a separate terminal window:')
-       print('screen -S "rdebug"')
+       cat('screen -S "rdebug"\n')
        readline('hit any key when ready')
     }
 
