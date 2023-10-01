@@ -6,3 +6,5 @@ importFrom("methods", "new")
 export(dbgR)
 export(assert)
 export(killScreen)
+export(dbgInit)
+

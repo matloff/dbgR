@@ -24,40 +24,43 @@
 
 # Author:  Norm Matloff
 
-print('under construction!')
-
 suppressMessages(library(rcurses))
 library(stringr)
 
-# all globals packaged here,
-# in an evironment as recommended by CRAN (http://r-pkgs.had.co.nz/check.html)
-debugr <- new.env(parent = emptyenv())
-debugr$scrn <- NULL  # will point to window object
-debugr$row <- NULL  # current row position of cursor within window
-debugr$src <- NULL  # handle for the current source file
-debugr$srclen <- NULL  # length in lines of the current source file
-debugr$srcpanellen <- NULL  # length in lines of the panel for displaying the source code
-debugr$winwidth <- NULL  # width in characters of the window
-debugr$srclines <- NULL  # contents of source file, list of strings, 1 per src line
-debugr$maxdigits <- NULL  # number of digits in the longest line number
-debugr$firstdisplayedlineno <- NULL  # source line number now displayed at top of window; starts at 0
-debugr$currsrcfilename <- NULL  # name of source file currently in window
-debugr$nextlinenum <- NA  # source line number to be executed next; starts at 1
-debugr$ftns <- NULL  # dictionary of function line numberss, indexed by function name
-debugr$debuggeecall <- NULL  # previous call to run debuggee, e.g. 'mybuggyfun(3)'
-debugr$scroll <- 20  # amount to scroll in response to 'up' and 'down' cmds
-debugr$papcmd <- ""  # expression to be printed at each pause (after n/s/c cmd)
-debugr$helpbarindex <- -1  # 1-based row index saying where to put the helpbar
-debugr$userinputindex <- -1  # 1-based row index saying where to put user input
-debugr$msgline <- NULL  # 1-based row index saying where to put messages on window
-debugr$ds <- NULL  # file handle for dbgsink file
-debugr$eds <- NULL  # file handle for dbgerrorsink file
-debugr$bpconds <- c()  # dictionary of breakpoints
-debugr$prevcmd <- ""  # last user command
-debugr$helpfile <- FALSE
-debugr$Nplace <- -1
-debugr$Dplace <- -1
-debugr$isbrowsing <- FALSE  # TRUE if in browser() mode
+dbgInit <- function() 
+{
+
+   # all globals packaged here,
+   # in an evironment as recommended by CRAN (http://r-pkgs.had.co.nz/check.html)
+   ### debugr <- new.env(parent = emptyenv())
+   assign('debugr',new.env(),envir = globalenv()) 
+   debugr$scrn <- NULL  # will point to window object
+   debugr$row <- NULL  # current row position of cursor within window
+   debugr$src <- NULL  # handle for the current source file
+   debugr$srclen <- NULL  # length in lines of the current source file
+   debugr$srcpanellen <- NULL  # length in lines of the panel for displaying the source code
+   debugr$winwidth <- NULL  # width in characters of the window
+   debugr$srclines <- NULL  # contents of source file, list of strings, 1 per src line
+   debugr$maxdigits <- NULL  # number of digits in the longest line number
+   debugr$firstdisplayedlineno <- NULL  # source line number now displayed at top of window; starts at 0
+   debugr$currsrcfilename <- NULL  # name of source file currently in window
+   debugr$nextlinenum <- NA  # source line number to be executed next; starts at 1
+   debugr$ftns <- NULL  # dictionary of function line numberss, indexed by function name
+   debugr$debuggeecall <- NULL  # previous call to run debuggee, e.g. 'mybuggyfun(3)'
+   debugr$scroll <- 20  # amount to scroll in response to 'up' and 'down' cmds
+   debugr$papcmd <- ""  # expression to be printed at each pause (after n/s/c cmd)
+   debugr$helpbarindex <- -1  # 1-based row index saying where to put the helpbar
+   debugr$userinputindex <- -1  # 1-based row index saying where to put user input
+   debugr$msgline <- NULL  # 1-based row index saying where to put messages on window
+   debugr$ds <- NULL  # file handle for dbgsink file
+   debugr$eds <- NULL  # file handle for dbgerrorsink file
+   debugr$bpconds <- c()  # dictionary of breakpoints
+   debugr$prevcmd <- ""  # last user command
+   debugr$helpfile <- FALSE
+   debugr$Nplace <- -1
+   debugr$Dplace <- -1
+   debugr$isbrowsing <- FALSE  # TRUE if in browser() mode
+}
 
 # debugging function, prints variable name with variable value
 p <- function(x) { print(paste0(deparse(substitute(x)),': ',x)) }
@@ -716,7 +719,7 @@ dohelp <- function() {
    ### tosend <- "print(scan(file=system.file('help.txt',package='dbgR'),what='',sep='\\n'))" 
    ### tosend <- "print(readLines(system.file('help.txt',package='dbgR')))" 
    ### tosend <- "print(base:::readLines('help.txt'))"
-   sendtoscreen(tosend)
+   ### sendtoscreen(tosend)
 }
 
 # initialize rcurses environment
@@ -842,6 +845,13 @@ killScreen <- function() {
 
 dbgR <- function(filename,term=NULL) {
 
+print('UNDER CONSTRUCTION!')
+
+    if (is.null(debugr$scroll)) {
+       print('must run dbgInit() first')
+       return()
+    }
+
     if (is.null(term)) {
        print('currently only for gnome-terminal')
        print('set up manually by running this in a separate terminal window:')
@@ -859,11 +869,11 @@ dbgR <- function(filename,term=NULL) {
     setupscreen(term)
     initcursesthings()
 
-# set up help file
-sendtoscreen("helpfile <- system.file('help.txt',package='dbgR')")
-sendtoscreen("systcmd <- paste('more',helpfile)")
-tosend <- "gethelp <- function() system(systcmd)"
-sendtoscreen(tosend)
+    # set up help file
+    sendtoscreen("helpfile <- system.file('help.txt',package='dbgR')")
+    sendtoscreen("systcmd <- paste('cat',helpfile)")
+    tosend <- "gethelp <- function() system(systcmd)"
+    sendtoscreen(tosend)
 
     # save the file name in a global variable
     debugr$currsrcfilename <- filename
