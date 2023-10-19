@@ -1,0 +1,10 @@
+
+Building an example to show newbies how and why to use a debugging tool.
+
+Uses nothing  more than debug().
+
+Ex is binary search; binsearch.0 is the original buggy code, then the
+other binsearch.i are the results of the big fixes found in typescript,
+the 'script' record of my debugging sessions.  Mostly commented.
+
+

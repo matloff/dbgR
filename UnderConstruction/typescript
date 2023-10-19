@@ -1,0 +1,754 @@
+Script started on 2023-10-18 21:29:52-07:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="80" LINES="40"]
+[4mnm-500-467c[24m:[1m~/Downloads[0m> R
+
+R version 4.3.1 (2023-06-16) -- "Beagle Scouts"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+Loading required package: gtools
+Loading required package: stats
+Loading required package: utils
+[?2004h> ksa[KAbbrev('src','source("BinSearch.R"0')
+[?2004lError in parse(text = toexec) : <text>:1:42: unexpected numeric constant
+1: src$f <<- function() source("BinSearch.R"0
+                                             ^
+[?2004h> ksAbbrev('src','source("BinSearch.R"0')[K[K[K[K")')
+[?2004l[?2004h> src
+[?2004lError in source("BinSearch.R") : BinSearch.R:14:15: unexpected '}'
+13: 
+14:    while(FALSE}
+                  ^
+[?2004h> src
+[?2004lError in source("BinSearch.R") : BinSearch.R:16:14: unexpected '='
+15:       xp <- x[probe]
+16:       if (xp =
+                 ^
+[?2004h> src
+[?2004lError in source("BinSearch.R") : BinSearch.R:20:7: unexpected '}'
+19:          probe <- round((probe/2)
+20:       }
+          ^
+[?2004h> src
+[?2004l$value
+function(x,val) 
+{
+
+   n <- length((x)
+   )
+   # initial guess
+   probe <- round(n/2)
+
+   while(FALSE) {
+      xp <- x[probe]
+      if (xp == val) return(probe)
+      if (val < xp) {
+         if (val > x[probe-1]) return(NA)  # no room left
+         probe <- round(probe/2)
+      } else {
+         if (val < x[probe+1]) return(NA)  # no room left
+         probe <- found((probe + n)/2)
+      }
+   }
+
+}
+
+$visible
+[1] FALSE
+
+[?2004h> src
+[?2004lError in source("BinSearch.R") : BinSearch.R:16:14: unexpected '='
+15:       xp <- x[probe]
+16:       if (xp =
+                 ^
+[?2004h> w <- c(5,12,13)
+[?2004l[?2004h> v <- 12
+[?2004l[?2004h> binsearch(w,v)
+[?2004l[?2004h> # nothing returned!
+[?2004l[?2004h> debug(binsearch)
+[?2004l[?2004h> debug(binsearch)[C[C# nothing returned![C[C[5Pbinsearch(w,v)
+[?2004ldebugging in: binsearch(w, v)
+debug at BinSearch.R#6: {
+    n <- length((x))
+    probe <- round(n/2)
+    while (FALSE) {
+        xp <- x[probe]
+        if (xp == val) 
+            return(probe)
+        if (val < xp) {
+            if (val > x[probe - 1]) 
+                return(NA)
+            probe <- round(probe/2)
+        }
+        else {
+            if (val < x[probe + 1]) 
+                return(NA)
+            probe <- found((probe + n)/2)
+        }
+    }
+}
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#9: n <- length((x))
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#12: probe <- round(n/2)
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#14: while (FALSE) {
+    xp <- x[probe]
+    if (xp == val) 
+        return(probe)
+    if (val < xp) {
+        if (val > x[probe - 1]) 
+            return(NA)
+        probe <- round(probe/2)
+    }
+    else {
+        if (val < x[probe + 1]) 
+            return(NA)
+        probe <- found((probe + n)/2)
+    }
+}
+[?2004hBrowse[2]> probe
+[?2004l[1] 2
+[?2004hBrowse[2]> n
+[?2004lexiting from: binsearch(w, v)
+[?2004h> # should have been while(TRUE([K)
+[?2004l[?2004h> src
+[?2004l$value
+function(x,val) 
+{
+
+   n <- length((x)
+   )
+   # initial guess
+   probe <- round(n/2)
+
+   while(TRUE) {
+      xp <- x[probe]
+      if (xp == val) return(probe)
+      if (val < xp) {
+         if (val > x[probe-1]) return(NA)  # no room left
+         probe <- round(probe/2)
+      } else {
+         if (val < x[probe+1]) return(NA)  # no room left
+         probe <- found((probe + n)/2)
+      }
+   }
+
+}
+
+$visible
+[1] FALSE
+
+[?2004h> binsearch(w,v)
+[?2004l[1] 2
+[?2004h> # zo[K[KOIK[K[KK
+[?2004l[?2004h> binsearch(8)  # should return NA[1@w[1@,
+[?2004l[1] NA
+[?2004h> binsearch(w,8)  # should return NA[1P[1@4
+[?2004lError in if (val > x[probe - 1]) return(NA) : argument is of length zero
+[?2004h> traceback()
+[?2004l1: binsearch(w, 4)
+[?2004h> debug(binsearch)
+[?2004l[?2004h> debug(binsearch)[C[C[5Ptraceback()[C[Cbinsearch(w,4)  # should return NA
+[?2004ldebugging in: binsearch(w, 4)
+debug at BinSearch.R#6: {
+    n <- length((x))
+    probe <- round(n/2)
+    while (TRUE) {
+        xp <- x[probe]
+        if (xp == val) 
+            return(probe)
+        if (val < xp) {
+            if (val > x[probe - 1]) 
+                return(NA)
+            probe <- round(probe/2)
+        }
+        else {
+            if (val < x[probe + 1]) 
+                return(NA)
+            probe <- found((probe + n)/2)
+        }
+    }
+}
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#9: n <- length((x))
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#12: probe <- round(n/2)
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#14: while (TRUE) {
+    xp <- x[probe]
+    if (xp == val) 
+        return(probe)
+    if (val < xp) {
+        if (val > x[probe - 1]) 
+            return(NA)
+        probe <- round(probe/2)
+    }
+    else {
+        if (val < x[probe + 1]) 
+            return(NA)
+        probe <- found((probe + n)/2)
+    }
+}
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#15: xp <- x[probe]
+[?2004hBrowse[2]> probe
+[?2004l[1] 2
+[?2004hBrowse[2]> x[probe]
+[?2004l[1] 12
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#16: if (xp == val) return(probe)
+[?2004hBrowse[2]> xp
+[?2004l[1] 12
+[?2004hBrowse[2]> val
+[?2004l[1] 4
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#17: if (val < xp) {
+    if (val > x[probe - 1]) 
+        return(NA)
+    probe <- round(probe/2)
+} else {
+    if (val < x[probe + 1]) 
+        return(NA)
+    probe <- found((probe + n)/2)
+}
+[?2004hBrowse[2]> xp
+[?2004l[1] 12
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#18: if (val > x[probe - 1]) return(NA)
+[?2004hBrowse[2]> [7mval > x[probe - 1][27m[C[C[C[C[C[C[C[C[C[C[Cval > x[probe - 1]
+[?2004l[1] FALSE
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#19: probe <- round(probe/2)
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#14: (while) [1] TRUE
+[?2004hBrowse[2]> probe
+[?2004l[1] 1
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#15: xp <- x[probe]
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#16: if (xp == val) return(probe)
+[?2004hBrowse[2]> xp
+[?2004l[1] 5
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#17: if (val < xp) {
+    if (val > x[probe - 1]) 
+        return(NA)
+    probe <- round(probe/2)
+} else {
+    if (val < x[probe + 1]) 
+        return(NA)
+    probe <- found((probe + n)/2)
+}
+[?2004hBrowse[2]> # [Kn
+[?2004l[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#18: if (val > x[probe - 1]) return(NA)
+[?2004hBrowse[2]> [7mval > x[probe - 1][27m[C[C[C[C[C[C[C[C[C[C[Cval > x[probe - 1]
+[?2004llogical(0)
+[?2004hBrowse[2]> probe
+[?2004l[1] 1
+[?2004hBrowse[2]> # oh[K[Koh, evaluating x[0], not right
+[?2004l[?2004hBrowse[2]> Q
+[?2004l[?2004h> src
+[?2004l$value
+function(x,val) 
+{
+
+   n <- length((x)
+   )
+   # initial guess
+   probe <- round(n/2)
+
+   while(TRUE) {
+      xp <- x[probe]
+      if (xp == val) return(probe)
+      if (val < xp) {
+         if (xp == 1) return(NA)
+         if (val > x[probe-1]) return(NA)  # no room left
+         probe <- round(probe/2)
+      } else {
+         if (val < x[probe+1]) return(NA)  # no room left
+         probe <- found((probe + n)/2)
+      }
+   }
+
+}
+
+$visible
+[1] FALSE
+
+[?2004h> src[2PQ# oh, evaluating x[0], not right[C[Cprobe[K[C[Cval > x[probe - 1][C[Cn[K#n[1Pnxp[1Pnprobe[C[Cn[Kval > x[probe - 1][C[Cn[Kxp[1Pnval[1Pxp[1Pnx[probe][C[C[3Pprobe[C[Cn[Kbinsearch(w,4)  # should return NA
+[?2004lError in if (val > x[probe - 1]) return(NA) : argument is of length zero
+[?2004h> traceback()
+[?2004l1: binsearch(w, 4)
+[?2004h> debugt[K(binsearch)  # each [K[K[K[K[Kmee[K[K[Kneed to apply to each new version of ftn
+[?2004l[?2004h> [7mbinsearch(w,4)[27m[C[Cbinsearch(w,4)
+[?2004ldebugging in: binsearch(w, 4)
+debug at BinSearch.R#6: {
+    n <- length((x))
+    probe <- round(n/2)
+    while (TRUE) {
+        xp <- x[probe]
+        if (xp == val) 
+            return(probe)
+        if (val < xp) {
+            if (xp == 1) 
+                return(NA)
+            if (val > x[probe - 1]) 
+                return(NA)
+            probe <- round(probe/2)
+        }
+        else {
+            if (val < x[probe + 1]) 
+                return(NA)
+            probe <- found((probe + n)/2)
+        }
+    }
+}
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#9: n <- length((x))
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#12: probe <- round(n/2)
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#14: while (TRUE) {
+    xp <- x[probe]
+    if (xp == val) 
+        return(probe)
+    if (val < xp) {
+        if (xp == 1) 
+            return(NA)
+        if (val > x[probe - 1]) 
+            return(NA)
+        probe <- round(probe/2)
+    }
+    else {
+        if (val < x[probe + 1]) 
+            return(NA)
+        probe <- found((probe + n)/2)
+    }
+}
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#15: xp <- x[probe]
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#16: if (xp == val) return(probe)
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#17: if (val < xp) {
+    if (xp == 1) 
+        return(NA)
+    if (val > x[probe - 1]) 
+        return(NA)
+    probe <- round(probe/2)
+} else {
+    if (val < x[probe + 1]) 
+        return(NA)
+    probe <- found((probe + n)/2)
+}
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#18: if (xp == 1) return(NA)
+[?2004hBrowse[2]> xp
+[?2004l[1] 12
+[?2004hBrowse[2]> # oops, meants [K[K probe == 1
+[?2004l[?2004hBrowse[2]> Q
+[?2004l[?2004h> src
+[?2004l$value
+function(x,val) 
+{
+
+   n <- length((x)
+   )
+   # initial guess
+   probe <- round(n/2)
+
+   while(TRUE) {
+      xp <- x[probe]
+      if (xp == val) return(probe)
+      if (val < xp) {
+         if (probe == 1) return(NA)
+         if (val > x[probe-1]) return(NA)  # no room left
+         probe <- round(probe/2)
+      } else {
+         if (val < x[probe+1]) return(NA)  # no room left
+         probe <- found((probe + n)/2)
+      }
+   }
+
+}
+
+$visible
+[1] FALSE
+
+[?2004h> binsearch(w,4)
+[?2004l[1] NA
+[?2004h> # good
+[?2004l[?2004h> # good[C[Cbinsearch(w,4)[1P)5)
+[?2004l[1] 1
+[?2004h> # good
+[?2004l[?2004h> # good[C[Cbinsearch(w,5)15)
+[?2004lError in found((probe + n)/2) : could not find function "found"
+[?2004h> # typoi[K, R thought the "ftn" found() would be defined at run time
+[?2004l[?2004h> src
+[?2004l$value
+function(x,val) 
+{
+
+   n <- length((x)
+   )
+   # initial guess
+   probe <- round(n/2)
+
+   while(TRUE) {
+      xp <- x[probe]
+      if (xp == val) return(probe)
+      if (val < xp) {
+         if (probe == 1) return(NA)
+         if (val > x[probe-1]) return(NA)  # no room left
+         probe <- round(probe/2)
+      } else {
+         if (val < x[probe+1]) return(NA)  # no room left
+         probe <- round((probe + n)/2)
+      }
+   }
+
+}
+
+$visible
+[1] FALSE
+
+[?2004h> src# typo, R thought the "ftn" found() would be defined at run time[C[Cbinsearch(w,15)[K
+[?2004l^C
+[?2004h> # omo[K[K[Kram [K[Kn long time, no stop, likely infinite loop, so ctrl-c
+[?2004l[?2004h> debug(binsearch)
+[?2004l[?2004h> debug(binsearch)[C[C# ran long time, no stop, likely infinite loop, so ctrl-c[C[Cbinsearch(w,15)[K
+[?2004ldebugging in: binsearch(w, 15)
+debug at BinSearch.R#6: {
+    n <- length((x))
+    probe <- round(n/2)
+    while (TRUE) {
+        xp <- x[probe]
+        if (xp == val) 
+            return(probe)
+        if (val < xp) {
+            if (probe == 1) 
+                return(NA)
+            if (val > x[probe - 1]) 
+                return(NA)
+            probe <- round(probe/2)
+        }
+        else {
+            if (val < x[probe + 1]) 
+                return(NA)
+            probe <- round((probe + n)/2)
+        }
+    }
+}
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#9: n <- length((x))
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#12: probe <- round(n/2)
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#14: while (TRUE) {
+    xp <- x[probe]
+    if (xp == val) 
+        return(probe)
+    if (val < xp) {
+        if (probe == 1) 
+            return(NA)
+        if (val > x[probe - 1]) 
+            return(NA)
+        probe <- round(probe/2)
+    }
+    else {
+        if (val < x[probe + 1]) 
+            return(NA)
+        probe <- round((probe + n)/2)
+    }
+}
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#15: xp <- x[probe]
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#16: if (xp == val) return(probe)
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#17: if (val < xp) {
+    if (probe == 1) 
+        return(NA)
+    if (val > x[probe - 1]) 
+        return(NA)
+    probe <- round(probe/2)
+} else {
+    if (val < x[probe + 1]) 
+        return(NA)
+    probe <- round((probe + n)/2)
+}
+[?2004hBrowse[2]> xp
+[?2004l[1] 12
+[?2004hBrowse[2]> val
+[?2004l[1] 15
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#22: if (val < x[probe + 1]) return(NA)
+[?2004hBrowse[2]> probe
+[?2004l[1] 2
+[?2004hBrowse[2]> [7mx[probe + 1][27mx[probe + 1]
+[?2004l[1] 13
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#23: probe <- round((probe + n)/2)
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#14: (while) [1] TRUE
+[?2004hBrowse[2]> [rpbe
+[?2004lError: unexpected '[' in "["
+[?2004hBrowse[2]> probe
+[?2004l[1] 2
+[?2004hBrowse[2]> # old value of probe was also 2, no wonder infi[K. loop
+[?2004l[?2004hBrowse[2]> # djhpi;f[K[K[K[K[K[K[Kdjpi;[K[K[K[K[K
+[?2004l[?2004hBrowse[2]> should be trying probe = 3
+[?2004lError: unexpected symbol in "should be"
+[?2004hBrowse[2]> should be trying probe = 3[1@#[1@ 
+[?2004l[?2004hBrowse[2]> Q
+[?2004l[?2004h> binsar[K[Kearch(w,15)
+[?2004ldebugging in: binsearch(w, 15)
+debug at BinSearch.R#6: {
+    n <- length((x))
+    probe <- round(n/2)
+    while (TRUE) {
+        xp <- x[probe]
+        if (xp == val) 
+            return(probe)
+        if (val < xp) {
+            if (probe == 1) 
+                return(NA)
+            if (val > x[probe - 1]) 
+                return(NA)
+            probe <- round(probe/2)
+        }
+        else {
+            if (val < x[probe + 1]) 
+                return(NA)
+            probe <- round((probe + n)/2)
+        }
+    }
+}
+[?2004hBrowse[2]> c
+[?2004l^C
+[?2004h> src
+[?2004l$value
+function(x,val) 
+{
+
+   n <- length((x)
+   )
+   # initial guess
+   probe <- round(n/2)
+
+   while(TRUE) {
+      xp <- x[probe]
+      if (xp == val) return(probe)
+      if (val < xp) {
+         if (probe == 1) return(NA)
+         if (val > x[probe-1]) return(NA)  # no room left
+         probe <- round(probe/2)
+      } else {
+         if (val < x[probe+1]) return(NA)  # no room left
+         oldprobe <- probe
+         probe <- round((probe + n)/2)
+         if (probe == oldprobe) probe <- probe+1
+      }
+   }
+
+}
+
+$visible
+[1] FALSE
+
+[?2004h> src[2Pcbinsearch(w,15)
+[?2004lError in if (val < x[probe + 1]) return(NA) : 
+  missing value where TRUE/FALSE needed
+[?2004h> # odd, let's take a lok[Kok
+[?2004l[?2004h> debjug[K[K[Kug(binsearch)
+[?2004l[?2004h> debug(binsearch)[C[C# odd, let's take a look[C[C[9Pbinsearch(w,15)
+[?2004ldebugging in: binsearch(w, 15)
+debug at BinSearch.R#6: {
+    n <- length((x))
+    probe <- round(n/2)
+    while (TRUE) {
+        xp <- x[probe]
+        if (xp == val) 
+            return(probe)
+        if (val < xp) {
+            if (probe == 1) 
+                return(NA)
+            if (val > x[probe - 1]) 
+                return(NA)
+            probe <- round(probe/2)
+        }
+        else {
+            if (val < x[probe + 1]) 
+                return(NA)
+            oldprobe <- probe
+            probe <- round((probe + n)/2)
+            if (probe == oldprobe) 
+                probe <- probe + 1
+        }
+    }
+}
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#9: n <- length((x))
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#12: probe <- round(n/2)
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#14: while (TRUE) {
+    xp <- x[probe]
+    if (xp == val) 
+        return(probe)
+    if (val < xp) {
+        if (probe == 1) 
+            return(NA)
+        if (val > x[probe - 1]) 
+            return(NA)
+        probe <- round(probe/2)
+    }
+    else {
+        if (val < x[probe + 1]) 
+            return(NA)
+        oldprobe <- probe
+        probe <- round((probe + n)/2)
+        if (probe == oldprobe) 
+            probe <- probe + 1
+    }
+}
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#15: xp <- x[probe]
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#16: if (xp == val) return(probe)
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#17: if (val < xp) {
+    if (probe == 1) 
+        return(NA)
+    if (val > x[probe - 1]) 
+        return(NA)
+    probe <- round(probe/2)
+} else {
+    if (val < x[probe + 1]) 
+        return(NA)
+    oldprobe <- probe
+    probe <- round((probe + n)/2)
+    if (probe == oldprobe) 
+        probe <- probe + 1
+}
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#22: if (val < x[probe + 1]) return(NA)
+[?2004hBrowse[2]> [7mx[probe + 1][27mx[probe + 1]
+[?2004l[1] 13
+[?2004hBrowse[2]> [7mval < x[probe + 1][27m[C[C[C[C[C[C[C[C[C[C[Cval < x[probe + 1]
+[?2004l[1] FALSE
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#23: oldprobe <- probe
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#24: probe <- round((probe + n)/2)
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#25: if (probe == oldprobe) probe <- probe + 1
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#25: probe <- probe + 1
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#14: (while) [1] TRUE
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#15: xp <- x[probe]
+[?2004hBrowse[2]> prfo[K[Kobe
+[?2004l[1] 3
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#16: if (xp == val) return(probe)
+[?2004hBrowse[2]> xp
+[?2004l[1] 13
+[?2004hBrowse[2]> val
+[?2004l[1] 15
+[?2004hBrowse[2]> n
+[?2004ldebug at BinSearch.R#17: if (val < xp) {
+    if (probe == 1) 
+        return(NA)
+    if (val > x[probe - 1]) 
+        return(NA)
+    probe <- round(probe/2)
+} else {
+    if (val < x[probe + 1]) 
+        return(NA)
+    oldprobe <- probe
+    probe <- round((probe + n)/2)
+    if (probe == oldprobe) 
+        probe <- probe + 1
+}
+[?2004hBrowse[2]> 
+[?2004ldebug at BinSearch.R#22: if (val < x[probe + 1]) return(NA)
+[?2004hBrowse[2]> # probe+1 = 4, past edge of x, need to add a check
+[?2004l[?2004hBrowse[2]> Q
+[?2004l[?2004h> # rsd[K[K[Kr[Keasier t[Kjust to have code check [King val <[1[K[K x[] [K[K1] or vbal [K[K[K[Kal > x[n] at staer[K[Krt
+[?2004l[?2004h> dtv[K[K[Ka[Ksrc
+[?2004l$value
+function(x,val) 
+{
+
+   n <- length(x)
+
+   if (val < x[1] || val > x[n]) return(NA)
+   
+   # initial guess
+   probe <- round(n/2)
+
+   while(TRUE) {
+      xp <- x[probe]
+      if (xp == val) return(probe)
+      if (val < xp) {
+         if (probe == 1) return(NA)
+         if (val > x[probe-1]) return(NA)  # no room left
+         probe <- round(probe/2)
+      } else {
+         if (val < x[probe+1]) return(NA)  # no room left
+         oldprobe <- probe
+         probe <- round((probe + n)/2)
+         if (probe == oldprobe) probe <- probe+1
+      }
+   }
+
+}
+
+$visible
+[1] FALSE
+
+[?2004h> src# easier just to have code checking val < x[1] or val > x[n] at start[C[CQ[K# probe+1 = 4, past edge of x, need to add a check[C[Cn[Kval[1Pxp[1Pnprobe[C[Cn[Kval < x[probe + 1][C[C[6P[C[C[C[C[C[C[C[C[C[C[C[C[C[Cn[Kbinsearch(w,15)
+[?2004l[1] NA
+[?2004h> binsearch(w,15)\)e)\)[1P)[1P)[1P)[1P)3)
+[?2004l[1] 3
+[?2004h> binsearch(w,13)[1P)2)
+[?2004l[1] 2
+[?2004h> binsearch(w,12)[1P)1)
+[?2004l[1] NA
+[?2004h> binsearch(w,11)[1P)[1P)[1P),)6)
+[?2004l[1] NA
+[?2004h> binsearch(w,6)[1P)5)
+[?2004l[1] 1
+[?2004h> binsearch(w,5)[1P)4)
+[?2004l[1] NA
+[?2004h> # loks[K[Koi[Kk good, but [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kw <- 5:6
+[?2004l[?2004h> w <- 5:6[C[Cbinsearch(w,4)
+[?2004l[1] NA
+[?2004h> binsearch(w,4)[1P)5)
+[?2004l[1] 1
+[?2004h> binsearch(w,5)[1P)6)
+[?2004l[1] 2
+[?2004h> # etc., more testing
+[?2004l[?2004h> [?2004l
+[?2004hSave workspace image? [y/n/c]: n
+[?2004l[4mnm-500-467c[24m:[1m~/Downloads[0m> exit
+exit
+
+Script done on 2023-10-18 23:20:21-07:00 [COMMAND_EXIT_CODE="0"]

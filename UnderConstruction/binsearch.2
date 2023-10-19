@@ -1,0 +1,27 @@
+
+# binary search, buggy
+
+# find index of val in x, or return NA is not there; x assumed sorted
+
+binsearch <- function(x,val) 
+{
+
+   n <- length((x)
+   )
+   # initial guess
+   probe <- round(n/2)
+
+   while(TRUE) {
+      xp <- x[probe]
+      if (xp == val) return(probe)
+      if (val < xp) {
+         if (xp == 1) return(NA)
+         if (val > x[probe-1]) return(NA)  # no room left
+         probe <- round(probe/2)
+      } else {
+         if (val < x[probe+1]) return(NA)  # no room left
+         probe <- found((probe + n)/2)
+      }
+   }
+
+}
