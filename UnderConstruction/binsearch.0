@@ -6,8 +6,8 @@
 binsearch <- function(x,val) 
 {
 
-   n <- length((x)
-   )
+   n <- length(x)
+   
    # initial guess
    probe <- round(n/2)
 
