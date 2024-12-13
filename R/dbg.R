@@ -791,7 +791,7 @@ getusercmd <- function() {
 
 setupscreen <- function(term) {
     # start "screen, with name 'rdebug' for now
-    cmd <- paste0(term,' -- screen -S "rdebug" &')
+    cmd <- paste0(term,' -e screen -S "rdebug" &')
     scmd <- makeSysCmd(cmd)
     scmd()
     # system('xterm -e screen -S 'rdebug" &')
