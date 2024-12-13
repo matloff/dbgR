@@ -31,27 +31,27 @@ dbgInit <- function()
 {
 
    # all globals packaged here,
-   # in an evironment as recommended by CRAN (http://r-pkgs.had.co.nz/check.html)
    ### debugr <- new.env(parent = emptyenv())
    assign('debugr',new.env(),envir = globalenv()) 
    debugr$scrn <- NULL  # will point to window object
    debugr$row <- NULL  # current row position of cursor within window
    debugr$src <- NULL  # handle for the current source file
    debugr$srclen <- NULL  # length in lines of the current source file
-   debugr$srcpanellen <- NULL  # length in lines of the panel for displaying the source code
+   debugr$srcpanellen <- NULL  # num lines in code display
    debugr$winwidth <- NULL  # width in characters of the window
-   debugr$srclines <- NULL  # contents of source file, list of strings, 1 per src line
+   debugr$srclines <- NULL  # contents of source file
    debugr$maxdigits <- NULL  # number of digits in the longest line number
-   debugr$firstdisplayedlineno <- NULL  # source line number now displayed at top of window; starts at 0
+   debugr$firstdisplayedlineno <- NULL  # source line number; starts at 0
    debugr$currsrcfilename <- NULL  # name of source file currently in window
-   debugr$nextlinenum <- NA  # source line number to be executed next; starts at 1
-   debugr$ftns <- NULL  # dictionary of function line numberss, indexed by function name
-   debugr$debuggeecall <- NULL  # previous call to run debuggee, e.g. 'mybuggyfun(3)'
+   debugr$nextlinenum <- NA  # line number to be executed next; starts at 1
+   # dictionary of function line numbers, indexed by function name
+   debugr$ftns <- NULL  
+   debugr$debuggeecall <- NULL  # previous call to run debuggee
    debugr$scroll <- 20  # amount to scroll in response to 'up' and 'down' cmds
-   debugr$papcmd <- ""  # expression to be printed at each pause (after n/s/c cmd)
-   debugr$helpbarindex <- -1  # 1-based row index saying where to put the helpbar
-   debugr$userinputindex <- -1  # 1-based row index saying where to put user input
-   debugr$msgline <- NULL  # 1-based row index saying where to put messages on window
+   debugr$papcmd <- ""  # expression to be printed at each pause
+   debugr$helpbarindex <- -1  # 1-based row index, where to put the helpbar
+   debugr$userinputindex <- -1  # 1-based row index where to put user input
+   debugr$msgline <- NULL  # 1-based row index where to put messages on window
    debugr$ds <- NULL  # file handle for dbgsink file
    debugr$eds <- NULL  # file handle for dbgerrorsink file
    debugr$bpconds <- c()  # dictionary of breakpoints
@@ -79,7 +79,8 @@ ndigs <- function(n) {
 writeline <- function(winrow,whattopaint,colorpair=NULL) {
     # Pad whattopaint with the right number of trailing spaces
     # to get a full row.
-    whattopaint <- stringr::str_c(whattopaint,strrep(' ',debugr$winwidth - nchar(whattopaint)))
+    whattopaint <- stringr::str_c(whattopaint,
+       strrep(' ',debugr$winwidth - nchar(whattopaint)))
 
     # Paint the line to the console with rcurses.
     rcurses.addstr(debugr$scrn,whattopaint,winrow-1,0,colorpair)
@@ -101,7 +102,8 @@ dispsrc <- function(srcstartrow) {
             } else {
                 writeline(winrow,debugr$srclines[i],rcurses.color_pair(2))
             }
-        } else if (substr(debugr$srclines[i],debugr$Dplace,debugr$Dplace) == 'D') {
+        } else 
+          if (substr(debugr$srclines[i],debugr$Dplace,debugr$Dplace) == 'D') {
             writeline(winrow,debugr$srclines[i],rcurses.color_pair(1))
         } else {
             writeline(winrow,debugr$srclines[i])
@@ -124,7 +126,6 @@ inputsrc <- function(filename) {
     }
     
     debugr$srclen <- length(lns)
-
     
     debugr$maxdigits <- ndigs(length(lns) + 1)
 
@@ -133,38 +134,26 @@ inputsrc <- function(filename) {
 
     # location of 'D', if any
     debugr$Dplace <- debugr$maxdigits + 3
-
     
     lnno <- 1
-
     
     debugr$srclines <- c()
-
     
     for (lineNum in 1:length(lns)) {
-
         # form the line number, with blanks instead of leading 0s
         ndl <- ndigs(lineNum)
-
-        
         ### tmp <- rep(' ',debugr$maxdigits - ndl)
         ### tmp <- paste0(tmp,toString(lineNum),' ')
         tmp <- sprintf(paste0('%',debugr$maxdigits,'d'),lineNum)
 
         # add room for N marker for next executed and D/B for breakpoint
         tmp <- paste0(tmp,'   ')
-
         # now add the source line itself, truncated to fit the window
         # width, if necessary
         tmp <- paste0(tmp,lns[lineNum])
-
-        
         ntrunclinechars <- min(debugr$winwidth,nchar(tmp))
-
         debugr$srclines <- c(debugr$srclines, substr(tmp,1,ntrunclinechars))
     }
-
-    
     dispsrc(1)
 }
 
@@ -393,10 +382,11 @@ checkdbgsink <- function() {
                 }
             }
             updatenext(linenum)
-        } else if (found[1] == 'exiting') {  # debugging stopped due to function end
+        } else if (found[1] == 'exiting') {  
+        # debugging stopped due to function end
             linenum = debugr$nextlinenum
             winrow = linenum - debugr$firstdisplayedlineno + 1
-            rplcsrcline(linenum,debugr$Nplace,' ')  # there's no longer a "next" line
+            rplcsrcline(linenum,debugr$Nplace,' ')  # there's no "next" line
             debugr$isbrowsing <- FALSE
             writeline(winrow,debugr$srclines[linenum],rcurses.color_pair(0))
             debugr$papcmd <- ''
@@ -420,8 +410,10 @@ dostep <- function(cmd) {
         # call, so function name is the first non-whitespace char in the
         # line, and ')' immediately follows the function name
         currline <- debugr$srclines[debugr$nextlinenum]
-        currline <- stringr::str_sub(currline, (debugr$Dplace+1))  # remove line number etc.
-        ftnpart <- stringr::str_trim(currline, "left")  # remove leading whitespace
+        # remove line number etc.
+        currline <- stringr::str_sub(currline, (debugr$Dplace+1))  
+        ftnpart <- stringr::str_trim(currline, "left")  
+        # remove leading whitespace
         parenplace <- stringr::str_locate(ftnpart, '\\(')[1]
         ftnname <- stringr::str_sub(ftnpart, 1, parenplace-1)
         cmd = stringr::str_c("debugonce(", ftnname, "); c")
@@ -512,7 +504,8 @@ findftnnamebylinenum <- function(linenum) {
 findftnlinenumbyname <- function(fname) {
     for (i in 1:length(debugr$srclines)) {
         possiblefname = findftnnamebylinenum(i)
-        if (!is.na(possiblefname)) {  # if there was a function declared on this line
+        # if there was a function declared on this line
+        if (!is.na(possiblefname)) {  
             if (possiblefname == fname) {
                 return(i)
             }
@@ -676,7 +669,8 @@ dopls <- function() {
 }
 
 dopenv <- function(cmd) {
-    e = stringr::str_split(cmd," ",simplify=TRUE)[2]  # the environment to print contents of
+    e = stringr::str_split(cmd," ",simplify=TRUE)[2]  
+    # the environment to print contents of
     if (is.na(e))  {
         # if no environment given, print current environment
         tosend = stringr::str_c("ls.str()")
@@ -778,7 +772,7 @@ errormsg <- function(err) {
 }
 
 getusercmd <- function() {
-    rcurses.move(debugr$scrn,debugr$userinputindex-1,0)  # rcurses is 0-based, so -1
+    rcurses.move(debugr$scrn,debugr$userinputindex-1,0)  # rcurses is 0-based
     cmd <- rcurses.getstr(debugr$scrn)
 
     # if user simply hits Enter, then re-do previous command
@@ -791,9 +785,11 @@ getusercmd <- function() {
 
 setupscreen <- function(term) {
     # start "screen, with name 'rdebug' for now
-    cmd <- paste0(term,' -e screen -S "rdebug" &')
-    scmd <- makeSysCmd(cmd)
-    scmd()
+    if (!is.null(term)) {
+       cmd <- paste0(term,' -e screen -S "rdebug" &')
+       scmd <- makeSysCmd(cmd)
+       scmd()
+    }
     # system('xterm -e screen -S 'rdebug" &')
     # start R within screen
     Sys.sleep(1)
@@ -857,16 +853,17 @@ print('UNDER CONSTRUCTION!')
        print('set up manually by running this in a separate terminal window:')
        cat('screen -S "rdebug"\n')
        readline('hit any key when ready')
-    }
+    } 
+
+    setupscreen(term)
 
     # check for existing 'screen' sessions with name 'rdebug'
     tmp <- system('screen -ls | grep rdebug')
-    if (tmp == 0) {
+    if (tmp != 0) {
         cat('rdebug screen running\n')
         cat('kill screen process, then run "screen -wipe"\n')
     }
 
-    setupscreen(term)
     initcursesthings()
 
     # set up help file
@@ -895,11 +892,13 @@ print('UNDER CONSTRUCTION!')
         tmp <- (debugr$winwidth - 1 - nchar(' h for help ')) / 2
 
         # put the help bar on the screen
-        helpbartext <- stringr::str_c(stringr::str_dup(' ',tmp),' h for help ',stringr::str_dup(' ',tmp))
+        helpbartext <- 
+           stringr::str_c(stringr::str_dup(' ',tmp),' h for help ',stringr::str_dup(' ',tmp))
         writeline(debugr$helpbarindex,helpbartext,rcurses.A_REVERSE)
 
         # clear user's previous input
-        writeline(debugr$userinputindex,stringr::str_dup(' ',debugr$winwidth - 1))
+        writeline(debugr$userinputindex,
+           stringr::str_dup(' ',debugr$winwidth - 1))
 
         fullcmd <- getusercmd()
         # specifies the command without params
